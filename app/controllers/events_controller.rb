@@ -1,7 +1,3 @@
-# Copyright (c) 2015, @sudharti(Sudharsanan Muralidharan)
-# Socify is an Open source Social network written in Ruby on Rails This file is licensed
-# under GNU GPL v2 or later. See the LICENSE.
-
 class EventsController < ApplicationController
   before_action :set_user
   before_action :authenticate_user!
@@ -43,7 +39,8 @@ class EventsController < ApplicationController
 
   def calendar
     if request.xhr?
-      friend_events = Event.select("events.*").joins("INNER JOIN follows ON events.user_id = follows.followable_id").where("follows.follower_id = #{current_user.id} AND follows.followable_type ='User'")
+      friend_events = Event.select("events.*").joins("INNER JOIN follows ON events.user_id = follows.followable_id")
+          .where("follows.follower_id = #{current_user.id} AND follows.followable_type ='User'")
       current_user_events = current_user.events
       @events = Event.from("(#{friend_events.to_sql} UNION #{current_user_events.to_sql}) as events").where("events.event_datetime BETWEEN '#{params[:start]}' AND '#{params[:end]}'")
     end

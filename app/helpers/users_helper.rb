@@ -4,7 +4,31 @@
 
 module UsersHelper
   def options_for_seasons
-    [['Male', 'male'], ['Female', 'female']]
+    Sex.all.map do |sex| 
+      [sex.sex, sex.id] 
+    end
+  end
+
+  def get_countries 
+    Country.all.map do |country| 
+      [country.country_name, country.id] 
+    end
+  end
+
+  def get_countries_codes
+    Country.all.map do |country| 
+      [country.country_phone_code, country.id] 
+    end
+  end
+
+  def set_country_code
+
+  end
+
+  def get_operators
+    Operator.all.map do |operator| 
+      [operator.operator_code, operator.id] 
+    end
   end
 
   def age(dob)

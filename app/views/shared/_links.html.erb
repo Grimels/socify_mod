@@ -24,6 +24,10 @@
     <%= link_to('Find Friends', find_friends_path)%>
   </h5>
   <h5>
+    <%= fa_icon 'envelope' %>
+    <%= link_to 'Your Conversations', conversations_path %>
+  </h5>
+  <h5>
     <%= fa_icon 'pencil' %>
     <%= link_to 'Edit Profile', edit_user_path(current_user) %>
   </h5>

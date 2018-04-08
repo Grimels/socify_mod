@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery.atwho
+//= require jquery.turbolinks
+//= require chosen-jquery
 //= require jquery_ujs
 //= require bootstrap
 //= require bindWithDelay

@@ -10,4 +10,8 @@ module ApplicationHelper
   def activity_resources_exist?(activity)
     activity && activity.trackable && activity.owner
   end
+
+  def page_header(text)
+  content_for(:page_header) { text.to_s }
+end
 end

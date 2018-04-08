@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :posts
   resources :comments, only: [:create, :destroy]
   devise_for :users
@@ -11,6 +12,26 @@ Rails.application.routes.draw do
       get :mentionable
     end
   end
+
+resources :conversations, only: [:index, :show, :destroy] do
+  member do
+    post :reply
+  end
+end
+  resources :messages, only: [:new, :create]
+
+  resources :conversations, only: [:index, :show, :destroy] do
+  member do
+    post :restore
+  end
+end
+
+resources :conversations, only: [:index, :show, :destroy] do
+  collection do
+    delete :empty_trash
+  end
+end
+
 
   resources :events do
     collection do

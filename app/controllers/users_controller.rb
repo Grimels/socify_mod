@@ -8,6 +8,10 @@ class UsersController < ApplicationController
   before_action :check_ownership, only: [:edit, :update]
   respond_to :html, :js
 
+  def index
+
+  end
+  
   def show
     @activities = PublicActivity::Activity.where(owner: @user).order(created_at: :desc).paginate(page: params[:page], per_page: 10)
   end
@@ -26,6 +30,13 @@ class UsersController < ApplicationController
   def deactivate
   end
 
+  def active_for_authentication?
+        # Uncomment the below debug statement to view the properties of the returned self model values.
+        # logger.debug self.to_yaml
+          
+        super && @user.is_admin
+  end
+
   def friends
     @friends = @user.following_users.paginate(page: params[:page])
   end
@@ -42,7 +53,7 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :about, :avatar, :cover,
-                                 :sex, :dob, :location, :phone_number)
+                                 :sex_id, :dob, :country_id, :phone_number, :is_admin)
   end
 
   def check_ownership

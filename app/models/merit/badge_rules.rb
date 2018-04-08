@@ -21,11 +21,15 @@ module Merit
     include Merit::BadgeRulesMethods
 
     def initialize
+      grant_on 'users#create', badge_id: 7, badge: 'just-registered', to: :itself
+      
       grant_on 'comments#create',  badge: 'Jr.Critics', temporary: true, to: :user do |comment|
         comment.user.comments.count >= 2
       end
+      grant_on 'comments#create', badge: 'commenter', level: 10 do |comment|
+        comment.user.comments.count == 10
+      end
     end
-
       # If it creates user, grant badge
       # Should be "current_user" after registration for badge to be granted.
       # Find badge by badge_id, badge_id takes presidence over badge
