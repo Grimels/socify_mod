@@ -42,7 +42,7 @@ group :production do
   gem 'rails_12factor'
   gem 'fog'
   gem 'fog-aws'
-  gem 'pg'
+  gem 'pg', '~> 0.18'
 end
 
 #gem 'devise'
