@@ -10,7 +10,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'mailboxer'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-gem 'merit'
+
 # Used to implement at.js for auto complete mentions/emojis
 gem 'jquery-atwho-rails'
 gem 'chosen-rails'

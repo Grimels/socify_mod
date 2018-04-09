@@ -25,18 +25,11 @@
       <%= @user.location %>
     </h5>
   <% end %>
-  <h5>
-    <i class="icon-record"></i> <%= pluralize(@user.points, 'point') %>
-  </h5>
-  <% if @user.badges.empty? %>
-    <h5>No badge yet.</h5>
+  <% if @user.country_id.nil? %>
+    <h5>No country set.</h5>
   <% else %>
     <h5>
-      <% @user.badges.each do |badge| %>
-        <i class="<%= badge.custom_fields[:icon] %>" style="color: <%= badge.custom_fields[:color] %>">
-        </i>
-        <%= badge.name %>
-      <% end %>
+            <%= "     #{Country.find(@user.country_id).country_name}" %>
     </h5>
   <% end %>
   <br>

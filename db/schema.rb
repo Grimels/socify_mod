@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180408061860) do
+ActiveRecord::Schema.define(version: 20180409104037) do
 
   create_table "activities", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "trackable_type"
@@ -54,9 +54,7 @@ ActiveRecord::Schema.define(version: 20180408061860) do
   end
 
   create_table "countries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string   "country_name"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string "country_name"
   end
 
   create_table "events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -155,8 +153,8 @@ ActiveRecord::Schema.define(version: 20180408061860) do
     t.integer  "target_id"
     t.text     "target_data",   limit: 65535
     t.boolean  "processed",                   default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
   create_table "merit_activity_logs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -172,11 +170,13 @@ ActiveRecord::Schema.define(version: 20180408061860) do
     t.integer  "num_points", default: 0
     t.string   "log"
     t.datetime "created_at"
+    t.index ["score_id"], name: "index_merit_score_points_on_score_id", using: :btree
   end
 
   create_table "merit_scores", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "sash_id"
     t.string  "category", default: "default"
+    t.index ["sash_id"], name: "index_merit_scores_on_sash_id", using: :btree
   end
 
   create_table "posts", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -194,8 +194,8 @@ ActiveRecord::Schema.define(version: 20180408061860) do
   end
 
   create_table "sashes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sexes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -227,16 +227,12 @@ ActiveRecord::Schema.define(version: 20180408061860) do
     t.string   "phone_number"
     t.integer  "posts_count",            default: 0,     null: false
     t.string   "slug"
-    t.integer  "sash_id"
-    t.integer  "level",                  default: 0
-    t.integer  "phones_id"
     t.integer  "country_id"
     t.integer  "sex_id"
     t.boolean  "is_admin",               default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
     t.index ["country_id"], name: "index_users_on_country_id", using: :btree
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
-    t.index ["phones_id"], name: "index_users_on_phones_id", using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
     t.index ["sex_id"], name: "index_users_on_sex_id", using: :btree
     t.index ["slug"], name: "index_users_on_slug", unique: true, using: :btree
@@ -260,6 +256,5 @@ ActiveRecord::Schema.define(version: 20180408061860) do
   add_foreign_key "mailboxer_notifications", "mailboxer_conversations", column: "conversation_id", name: "notifications_on_conversation_id"
   add_foreign_key "mailboxer_receipts", "mailboxer_notifications", column: "notification_id", name: "receipts_on_notification_id"
   add_foreign_key "users", "countries"
-  add_foreign_key "users", "phones", column: "phones_id"
   add_foreign_key "users", "sexes"
 end
